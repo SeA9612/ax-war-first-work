@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>품질 회수·공급 복구 운영 시스템</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/themes/theme-a.css">
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+<header class="top">
+  <div class="brand">
+    <h1 class="title">품질 회수·공급 복구 운영 시스템</h1>
+    <div class="basedate">기준일 2026-07-01</div>
+  </div>
+  <div class="topright">
+    <span id="liveState" class="live">자동 갱신 준비 중</span>
+    <label class="toggle" for="extToggle" title="필수 확장 (a) 원료 로트 추적 → 예방 점검">
+      <input type="checkbox" id="extToggle" role="switch"> <span>확장(a) 로트 추적<span id="extState" class="state"></span></span>
+    </label>
+    <button id="resetBtn" class="btn ghost">초기화</button>
+  </div>
+</header>
+<nav class="tabs" id="tabs" role="tablist" aria-label="화면">
+  <button data-tab="overview" class="active" role="tab" aria-selected="true" aria-controls="main">한눈에 보기</button>
+  <button data-tab="dashboard" role="tab" aria-selected="false" aria-controls="main" tabindex="-1">배치 판정</button>
+  <button data-tab="cases" role="tab" aria-selected="false" aria-controls="main" tabindex="-1">사건(Case)</button>
+  <button data-tab="events" role="tab" aria-selected="false" aria-controls="main" tabindex="-1">이벤트 입력</button>
+  <button data-tab="plan" role="tab" aria-selected="false" aria-controls="main" tabindex="-1">재공급 계획</button>
+  <button data-tab="ext" role="tab" aria-selected="false" aria-controls="main" tabindex="-1">확장 ON/OFF 비교</button>
+  <button data-tab="scenarios" role="tab" aria-selected="false" aria-controls="main" tabindex="-1">시연 시나리오</button>
+  <button data-tab="audit" role="tab" aria-selected="false" aria-controls="main" tabindex="-1">감사기록</button>
+  <button data-tab="sources" role="tab" aria-selected="false" aria-controls="main" tabindex="-1">데이터 출처</button>
+</nav>
+<div id="liveBar" class="livebar" role="status" hidden>다른 곳에서 바뀐 내용이 있습니다. 입력 중인 내용을 지키려고 화면을 바로 바꾸지 않았습니다. <button type="button" class="btn sm" id="liveApply">최신 상태 보기</button></div>
+<main id="main" role="tabpanel" tabindex="-1"></main>
+<div id="toast" class="toast hidden" role="status" aria-live="polite" aria-atomic="true"><span id="toastMsg"></span><button type="button" class="t-close" id="toastClose" aria-label="알림 닫기">✕</button></div>
+<footer class="foot" id="foot"><span>근거 태그 읽는 법: [원본] 원본 파일 값, [도출] 원본으로 계산한 값, [가정] 팀 가정, [모의] 가상 입력과 회신, [미확인] 확인을 요청할 대상.</span><span>모의 AI의 출력은 판정이나 상태를 바꾸지 않습니다. Claude API 연결 코드는 있지만 운영에서 쓰지 않았고 검증하지 않았습니다. 기준일은 2026-07-01입니다.</span></footer>
+<dialog id="confirmDlg" class="confirm" aria-labelledby="cfTitle" aria-describedby="cfBody">
+  <h2 id="cfTitle"></h2>
+  <p id="cfBody"></p>
+  <div class="cf-actions"><button type="button" class="btn alt" id="cfCancel">취소</button><button type="button" class="btn warn" id="cfOk">확인</button></div>
+</dialog>
+<script src="/app.js"></script>
+</body>
+</html>

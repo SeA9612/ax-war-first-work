@@ -1,0 +1,50 @@
+/* 시안 A — 신뢰 네이비(기업용)
+   콘셉트: 은행·제조 대기업 내부 시스템처럼 차분하고 단정함. 짙은 네이비 헤더 + 남색 강조색,
+   그림자 거의 없음, 얇은 테두리와 작은 모서리, 표 머리에 남색 띠로 "공식 문서" 느낌.
+   style.css의 의미 토큰만 덮어쓰고, 컴포넌트는 꼭 필요한 곳만 손댄다. */
+:root {
+  --bg: #eef1f6; --surface: #ffffff; --surface-2: #f4f6fa;
+  --ink: #14213a; --ink-2: #33415c; --muted: #55627a;
+  --line: #d6dce6; --line-strong: #7f8aa0;
+  --header-bg: #0e2547; --header-ink: #ffffff; --header-sub: #c3cee3;
+  --accent: #1d4f91; --accent-hover: #163d72; --accent-soft: #e6edf8;
+  --focus: #1d4f91; --focus-on-dark: #ffd666;
+  --r-sm: 2px; --r-md: 4px; --r-lg: 6px;
+  --shadow-1: none;
+  --shadow-2: 0 4px 14px rgba(14, 37, 71, .22);
+  --toast-bg: #0e2547;
+}
+/* 헤더 아래 얇은 금색 선 — 기준일 배지와 같은 계열로 '공식' 느낌 */
+.top { border-bottom: 3px solid #c9a227; }
+/* 탭: 남색 글자, 활성 탭은 두꺼운 남색 밑줄 */
+.tabs { background: var(--surface); }
+.tabs button.active, .tabs button[aria-selected="true"] { border-bottom-width: 3px; }
+/* 표 머리: 연한 남색 띠 */
+th { background: #e3e9f3; color: #1e3358; }
+/* 패널 제목 아래 구분선 */
+.panel > h3:first-child, .panel-head { padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.panel-head h3 { padding-bottom: 0; border-bottom: 0; }
+.kpi, .cmp-cell, .alt-card, .sc-card, .casecard { box-shadow: none; }
+.flow-cell .fno { background: var(--accent); }
+
+/* ---- AI 티 줄이기 (2026-11-12, frontend-design 지침) ----
+   같은 둥근 카드 반복·알약 모양·노란 알약 배지를 걷어낸다. 색과 판정 기호는 A안 그대로. */
+/* 기준일: 노란 알약 → 금색 테두리 도장 */
+.basedate { background: transparent; color: #f3d67a; border: 1.5px solid #c9a227; border-radius: 2px; padding: 1px 8px; }
+/* 칩: 알약 → 작은 각진 라벨 */
+.chip { border-radius: 2px; }
+.badge { border-radius: 2px; }
+/* 요약 6칸: 한 장의 집계 표. 평소엔 색·도형 없이 회색 칸선만(줄바꿈돼도 선이 맞도록 1px 간격 격자).
+   처리할 것이 생긴 칸(회수 대상·분모 민감·예방 점검이 1건 이상 = .on)만 연한 바탕 + 위쪽 색 선 + 기호로 강조. */
+.kpis { gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
+.kpi, .kpi.minor { border: 0; border-radius: 0; background: var(--surface); }
+.kpis .kpi .k::before { content: none; }
+.kpi .v { color: var(--ink); }
+/* 문제가 생긴 칸은 판정 종류와 관계없이 연한 빨강 바탕만(선·기호 없음) */
+.kpis .kpi.on { background: var(--j-recall-bg); box-shadow: none; }
+/* 표의 판정 라벨: 앞 기호 없이 글자와 바탕색만 */
+.j-recall::before, .j-sens::before, .j-prev::before, .j-inv::before, .j-below::before, .j-ok::before { content: none; }
+/* 경고 상자: 색 바탕 상자 → 흰 바탕 + 왼쪽 선 */
+.infobox, .warnbox, .errbox, .okbox { background: var(--surface); border-width: 0 0 0 4px; border-radius: 0; }
+/* 하단 안내: 가운데 정렬 긴 줄 → 왼쪽 정렬 두 줄 */
+.foot { text-align: left; max-width: 1360px; margin: 0 auto; line-height: 1.7; }

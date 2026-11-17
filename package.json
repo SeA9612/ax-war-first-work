@@ -1,0 +1,18 @@
+{
+  "name": "axwar-quality-recall",
+  "version": "1.0.0",
+  "private": true,
+  "description": "품질 회수·공급 복구 AI 운영 시스템 (AX 인재전쟁 W03)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
+    "zod": "^4.6.7"
+  }
+}

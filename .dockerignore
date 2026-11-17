@@ -1,0 +1,14 @@
+# 배포 이미지에서 제외 (F16, 팀장 허가로 신규 작성)
+node_modules
+data/state.json
+data/state.json.tmp
+01_참가자_배포용
+제출용_기록
+.claude
+.codex
+.agents
+.axhub
+.git
+.env
+.env.*
+npm-debug.log*

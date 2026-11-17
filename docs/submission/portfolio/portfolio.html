@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>품질 회수·공급 복구 운영 시스템 — 프로젝트 포트폴리오</title>
+<style>
+@page { size: A4 landscape; margin: 0; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; color: #1d2329; background: #fff; }
+.page { width: 297mm; height: 210mm; padding: 14mm 16mm 12mm; page-break-after: always; position: relative; overflow: hidden; }
+.page:last-child { page-break-after: auto; }
+.bar { position: absolute; left: 0; top: 0; width: 100%; height: 6mm; background: #13203a; }
+.foot { position: absolute; left: 16mm; right: 16mm; bottom: 7mm; display: flex; justify-content: space-between; font-size: 8.5pt; color: #6b7480; }
+h1 { font-size: 30pt; margin: 0 0 4mm; line-height: 1.25; }
+h2 { font-size: 19pt; margin: 2mm 0 4mm; padding-bottom: 2mm; border-bottom: 2px solid #13203a; }
+h3 { font-size: 12pt; margin: 0 0 2mm; color: #13203a; }
+p, li { font-size: 10.5pt; line-height: 1.6; margin: 0 0 2mm; }
+ul { margin: 0; padding-left: 5mm; }
+.muted { color: #5d6670; }
+.cover { background: #13203a; color: #fff; display: flex; flex-direction: column; justify-content: center; }
+.cover .tag { display: inline-block; font-size: 11pt; background: #ffd166; color: #13203a; padding: 1mm 4mm; border-radius: 2px; font-weight: 700; margin-bottom: 6mm; }
+.cover p { font-size: 13pt; color: #dbe3ee; max-width: 200mm; }
+.cover .meta { margin-top: 10mm; font-size: 11pt; color: #c9d3e0; line-height: 1.9; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5mm; }
+.box { border: 1px solid #d5dae0; border-radius: 3px; padding: 4mm; }
+.box.hot { background: #fde8e7; border-color: #f3c4c1; }
+.shot { width: 100%; border: 1px solid #d5dae0; border-radius: 3px; display: block; }
+.cap { font-size: 9pt; color: #5d6670; margin-top: 1.5mm; line-height: 1.5; }
+.flow { display: flex; gap: 2mm; align-items: stretch; margin: 3mm 0 5mm; }
+.flow div { flex: 1; background: #eef2f7; border-radius: 3px; padding: 3mm 2.5mm; font-size: 9.5pt; line-height: 1.45; }
+.flow div b { display: block; font-size: 10.5pt; color: #13203a; margin-bottom: 1mm; }
+.flow .arrow { flex: 0 0 4mm; background: none; padding: 0; display: flex; align-items: center; justify-content: center; color: #8a94a0; font-size: 12pt; }
+table { width: 100%; border-collapse: collapse; font-size: 9.8pt; }
+th, td { border: 1px solid #d5dae0; padding: 2mm 2.5mm; text-align: left; vertical-align: top; line-height: 1.45; }
+th { background: #eef2f7; white-space: nowrap; }
+.num { font-size: 22pt; font-weight: 700; color: #13203a; line-height: 1.1; }
+.k { font-size: 9pt; color: #5d6670; }
+</style>
+</head>
+<body>
+
+<!-- 1. 표지 -->
+<section class="page cover">
+  <span class="tag">AX 인재전쟁 · 삼일PwC 출제 회차 · 업무 3번</span>
+  <h1>품질 회수·공급 복구<br>운영 시스템</h1>
+  <p>클레임이 쌓였을 때 어느 배치를 회수 상신할지 판단하고, 위원회 의결 뒤 영업·생산이 승인할 재공급 계획과 후속 작업까지 이어 주는 AI 기반 운영 시스템입니다.</p>
+  <div class="meta">
+    배포 주소 · https://axwar-assignment-xjdg.axhub.app<br>
+    기준일 · 2026-07-01 (대회 원본 데이터)<br>
+    구성 · Node.js 내장 서버 + 규칙 엔진 + 모의 AI(비용 0원) · 자동 테스트 85개
+  </div>
+</section>
+
+<!-- 2. 문제와 결정 -->
+<section class="page">
+  <div class="bar"></div>
+  <h2>1. 누구의 어떤 결정을 돕는가</h2>
+  <div class="grid2">
+    <div>
+      <h3>결정</h3>
+      <p>Corevia 품질팀이 클레임·검사 결과를 받았을 때 <b>어느 생산 배치를 품질위원회에 회수 상신할지</b>, 위원회가 회수를 의결할지, 의결 뒤 <b>영업 임원·생산이 어떤 재공급 대안을 승인할지</b>.</p>
+      <h3 style="margin-top:5mm">왜 어려운가</h3>
+      <ul>
+        <li><b>근거가 흩어져 있음</b> — 클레임은 품질, 출하처는 품질 출하(SBL), 매출은 매출 출하(SH). SBL과 SH는 연결 키가 없음.</li>
+        <li><b>판정이 흔들림</b> — 정책은 "확정 불량 수량/배치 수량 10% 이상". 분모(생산량·출하량)에 따라 결과가 갈리고, 미확정 클레임·언론 보도가 과잉 대응을 부름.</li>
+        <li><b>회수와 공급 복구가 분리</b> — 더마 전용 라인 L-02 가동률 97%, 대체 물량은 다른 고객 주문을 밀어야 나옴.</li>
+        <li><b>정정 뒤 책임 공백</b> — 판정이 바뀌면 이미 나간 통지·일정을 누가 다시 볼지 정해져 있지 않음.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>시스템이 바꾸는 것</h3>
+      <div class="grid2" style="gap:3mm">
+        <div class="box"><div class="num">2개</div><div class="k">배치 단위로는 안 보이던 같은 원료 로트 배치를 예방 점검으로 분리</div></div>
+        <div class="box"><div class="num">24 : 16</div><div class="k">로트 추적 ON/OFF 시 생성 작업 수(회수 통지 수는 5건으로 같음 → 과잉 회수 없음)</div></div>
+        <div class="box"><div class="num">20건</div><div class="k">판정 정정 시 자동으로 '재검증 필요'로 되돌린 후속 작업</div></div>
+        <div class="box"><div class="num">0원</div><div class="k">API 키 없이 규칙·템플릿 모의 AI로 운영, AI는 판정·상태를 바꾸지 못함</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>품질 회수·공급 복구 운영 시스템</span><span>2</span></div>
+</section>
+
+<!-- 3. 흐름 -->
+<section class="page">
+  <div class="bar"></div>
+  <h2>2. 시작부터 끝까지</h2>
+  <div class="flow">
+    <div><b>사건 입력</b>클레임 누적 · 판정 정정 · 언론 보도 · 위원회 회신</div><div class="arrow">→</div>
+    <div><b>재계산·판정</b>규칙 엔진, 생산·출하 두 분모 · 회수 대상/분모 민감/예방 점검/조사·소명</div><div class="arrow">→</div>
+    <div><b>상신 준비</b>모의 AI 근거 요약·미확인 지적·상신문 초안 → 품질팀 상신</div><div class="arrow">→</div>
+    <div><b>위원회 회신</b>모의 AI 분류 제안 → 담당자 확정(승인/추가자료/거절)</div><div class="arrow">→</div>
+    <div><b>후속 작업·재공급</b>회수 범위·출하 정지·고객 통지·로트 격리 · 대안 A/B/C → 영업 임원·생산 승인</div><div class="arrow">→</div>
+    <div><b>상태·기록</b>사건 상태·정상화 체크리스트 갱신 · 감사기록</div>
+  </div>
+  <div class="grid3">
+    <div class="box"><h3>정상 사례</h3><p>클레임 누적 → 판정 11.87% / 11.59% → 상신 → 회수 승인 → 작업 자동 생성 → 통지(금지 표현 서버 차단) → 조달 회신 → 대안 A 승인 → 언론 보도 입력에도 판정 유지.</p></div>
+    <div class="box"><h3>조건 변경</h3><p>클레임 3건 정정 → 생산 9.72% / 출하 10.04%로 갈려 '분모 민감', 기존 작업 '재검증 필요' → 재상신 → 추가 정정 시 회수 해제, 작업 취소·정정 통지 생성.</p></div>
+    <div class="box"><h3>정보 부족</h3><p>C-105는 해당 배치 출하 기록이 없어 빼면 7.58% → 위원회 추가자료 요구 → 사건 보류·확인요청 2건 → 회신 전 재상신 차단 → 귀속 확인 후 재상신·승인.</p></div>
+  </div>
+  <p class="muted" style="margin-top:4mm">흐름도 대비 바꾼 점: 추가자료 요구를 보류 상태와 확인요청 작업으로 분리, 재공급 계획에 2단계 승인 연결, 판정 정정·재상신 중에는 이전 의결 효력을 멈춤. 품질위원회의 회수 권한은 그대로.</p>
+  <div class="foot"><span>품질 회수·공급 복구 운영 시스템</span><span>3</span></div>
+</section>
+
+<!-- 4. 첫 화면 -->
+<section class="page">
+  <div class="bar"></div>
+  <h2>3. 누구나 읽는 첫 화면 — 문제 칸만 빨간색</h2>
+  <div class="grid2">
+    <div><img class="shot" src="img/01_overview.jpg"><div class="cap">평소엔 흰 칸, 문제(회수 결정 전 회수 대상·열린 경고·사건 미접수·전월보다 늘어난 클레임·재검증 필요 작업)일 때만 빨간 칸. 칸을 누르면 실무자용 상세 화면으로 이동.</div></div>
+    <div><img class="shot" src="img/02_trend.jpg"><div class="cap">월별 클레임(확정/미확정 구분), 제품별 비중(문제 제품만 빨강), 두 배치의 누적 불량률이 회수 기준 10%를 넘은 시점, 이벤트 흐름. 막대·조각에 마우스를 올리면 숫자 표시.</div></div>
+  </div>
+  <div class="foot"><span>품질 회수·공급 복구 운영 시스템</span><span>4</span></div>
+</section>
+
+<!-- 5. 처리와 기록 -->
+<section class="page">
+  <div class="bar"></div>
+  <h2>4. 상세 확인 → 처리 → 기록</h2>
+  <div class="grid3">
+    <div><img class="shot" src="img/03_warn_detail.jpg"><div class="cap">경고 상세: 배치·원료 로트·불량률·현재 판정과 해결 방법.</div></div>
+    <div><img class="shot" src="img/04_ack.jpg"><div class="cap">원본 사실(보류인데 출하)은 지우지 않고 확인 내용을 남겨 확인 처리.</div></div>
+    <div><img class="shot" src="img/05_after.jpg"><div class="cap">처리하면 첫 화면의 해당 칸이 흰색으로 바뀜.</div></div>
+    <div><img class="shot" src="img/06_audit.jpg"><div class="cap">감사기록: 모든 판정·처리·모의 입력을 사람·시스템·모의 AI로 구분해 기록.</div></div>
+    <div><img class="shot" src="img/07_report.jpg"><div class="cap">보고서 내보내기: 인쇄용 한 장 + 전체 480개 배치 CSV.</div></div>
+    <div class="box"><h3>순서 통제</h3><p>판정 전 상신, 재상신 중 통지·계획, 예외 사유 없는 한도 초과 대안은 서버가 차단. 고객 통지의 원인 확정·보상 금액·미확정 납기·언론 보도 표현도 발송 전에 막음.</p></div>
+  </div>
+  <div class="foot"><span>품질 회수·공급 복구 운영 시스템</span><span>5</span></div>
+</section>
+
+<!-- 6. 시나리오 검증 -->
+<section class="page">
+  <div class="bar"></div>
+  <h2>5. 세 가지 사례를 실제 API로 실행해 검증</h2>
+  <div class="grid3">
+    <div><img class="shot" src="img/08_scn_normal.jpg"><div class="cap">정상 사례 12단계: 단계마다 기대값과 실제값을 표로 비교.</div></div>
+    <div><img class="shot" src="img/09_scn_change.jpg"><div class="cap">조건 변경 5단계: 정정 → 분모 민감 → 재검증 → 하향.</div></div>
+    <div><img class="shot" src="img/10_scn_info.jpg"><div class="cap">정보 부족 5단계: 추가자료 요구 → 보류 → 확인 → 재상신.</div></div>
+  </div>
+  <p style="margin-top:5mm">자동 테스트 85개(판정 규칙, 상태 전이, 재검증, 경고·첫 화면, 보고서, 입력 검증)를 모두 통과한 상태로 배포했습니다.</p>
+  <div class="foot"><span>품질 회수·공급 복구 운영 시스템</span><span>6</span></div>
+</section>
+
+<!-- 7. 확장·부서 영향 -->
+<section class="page">
+  <div class="bar"></div>
+  <h2>6. 필수 확장과 다른 부서 영향</h2>
+  <div class="grid2">
+    <div><img class="shot" src="img/11_ext.jpg"><div class="cap"><b>원료 로트 추적 → 예방 점검</b>: 회수 배치와 같은 입고검사 보류 로트를 쓴 합격 배치 2개(약 30만 EA 출하)를 회수가 아닌 예방 점검으로 분리. 같은 입력을 ON/OFF로 실제 실행해 작업 24건 대 16건, 회수 통지 수는 같음.</div></div>
+    <div><img class="shot" src="img/12_plan.jpg"><div class="cap"><b>생산 L-02 여력과 영업 납품 약속</b>: 대안 A(8주, 기존 주문 159건 평균 17.3일 지연), B(41주, 한도 초과로 예외 사유 없으면 상신 차단), C(실행 불가). 기존 주문을 늦추는 대안은 영업 임원·생산 승인이 필요하고, 승인되면 납기 변경 통지·대체 공급 안내·생산 순서 변경 작업 생성.</div></div>
+  </div>
+  <div class="foot"><span>품질 회수·공급 복구 운영 시스템</span><span>7</span></div>
+</section>
+
+<!-- 8. 작동 범위 -->
+<section class="page">
+  <div class="bar"></div>
+  <h2>7. 작동 범위와 AI의 역할</h2>
+  <table>
+    <tr><th>실제 작동</th><td>원본 로드, 규칙 판정·재계산, 로트 추적·예방 점검, 사건 상태 전이와 순서 통제, 작업·확인요청 생성과 재검증, 재공급 대안 계산·한도 판정, 입력 검증, 감사기록, 금지 표현 서버 점검, 첫 화면·경고 처리·보고서</td></tr>
+    <tr><th>모의 처리</th><td>품질위원회 회신, 영업 임원·생산 승인, 조달·고객 회신, 판정 정정 입력, 통지 발송(실제 발송 없음)</td></tr>
+    <tr><th>설계 단계</th><td>ERP·메일 연동, 원인조사 결론</td></tr>
+    <tr><th>AI</th><td>규칙·템플릿 기반 모의 AI(비용 0원)로 고정. 근거 요약·미확인 지적·상신문 초안, 회신 분류 제안, 대안 설명·안내 초안을 만들지만 판정·상태는 바꾸지 못함. Claude API 경로는 코드에 있으나 운영에서 쓰지 않음.</td></tr>
+    <tr><th>사람 승인</th><td>상신(품질팀) · 회수 의결(품질위원회) · 회신 분류 확정(담당자) · 재공급 대안 승인(영업 임원·생산) · 초안 적용·발송(담당자)</td></tr>
+    <tr><th>데이터</th><td>대회 원본 CSV를 무수정 복사(SHA-256 기록). 가정값은 화면에 [가정]으로 표시하고 바꿀 수 있음. 없는 정보는 확인요청·보류로 처리.</td></tr>
+  </table>
+  <p class="muted" style="margin-top:4mm">배포: https://axwar-assignment-xjdg.axhub.app · 화면 상단 '초기화'로 처음 상태로 되돌릴 수 있음.</p>
+  <div class="foot"><span>품질 회수·공급 복구 운영 시스템</span><span>8</span></div>
+</section>
+
+</body>
+</html>
